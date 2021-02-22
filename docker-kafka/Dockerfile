@@ -14,7 +14,8 @@ RUN mkdir -p /opt/prometheus/conf \
 ENV PROMETHEUS_EXPORTER_CONF="-javaagent:/opt/prometheus/jmx_prometheus_javaagent.jar=5555:/opt/prometheus/conf/prometheus-config.yml"
 ADD prometheus-config.yml /opt/prometheus/
 
-ENV KAFKA_VERSION=1.0.0
+# ENV KAFKA_VERSION=1.0.0
+ENV KAFKA_VERSION=2.7.0
 ENV SCALA_VERSION=2.12.4
 ENV KAFKA_BIN_VERSION=2.12-$KAFKA_VERSION
 
@@ -22,7 +23,7 @@ ENV KAFKA_BIN_VERSION=2.12-$KAFKA_VERSION
 RUN curl -SLs "http://www.scala-lang.org/files/archive/scala-${SCALA_VERSION}.rpm" -o scala.rpm \
         && rpm -ihv scala.rpm \
         && rm scala.rpm \
-        && curl -SLs "http://www.apache.org/dist/kafka/${KAFKA_VERSION}/kafka_${KAFKA_BIN_VERSION}.tgz" | tar -xzf - -C /opt \
+        && curl -SLs "http://www.apache.org/dist/kafka/${KAFKA_VERSION}/kafka_${KAFKA_BIN_VERSION}.tgz" | gunzip | tar -xzf - -C /opt \
         && mv /opt/kafka_${KAFKA_BIN_VERSION} /opt/kafka \
         && mkdir -p /deployments/bin
 
