@@ -23,7 +23,8 @@ ENV KAFKA_BIN_VERSION=2.12-$KAFKA_VERSION
 RUN curl -SLs "http://www.scala-lang.org/files/archive/scala-${SCALA_VERSION}.rpm" -o scala.rpm \
         && rpm -ihv scala.rpm \
         && rm scala.rpm \
-        && curl -SLs "http://www.apache.org/dist/kafka/${KAFKA_VERSION}/kafka_${KAFKA_BIN_VERSION}.tgz" | tar -zxvf - -C /opt -xJ --strip-components=1\
+        #&& curl -SLs "http://www.apache.org/dist/kafka/${KAFKA_VERSION}/kafka_${KAFKA_BIN_VERSION}.tgz" | tar -zxvf - -C /opt -xJ --strip-components=1 \
+        && curl -SLs "http://www.apache.org/dist/kafka/2.7.0/kafka_2.12-2.7.0.tgz" | tar -zxvf - -C /opt \
         && mv /opt/kafka_${KAFKA_BIN_VERSION} /opt/kafka \
         && mkdir -p /deployments/bin
 
