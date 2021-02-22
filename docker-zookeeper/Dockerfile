@@ -28,13 +28,14 @@ RUN mkdir -p "$ZOO_DATA_LOG_DIR" "$ZOO_DATA_DIR" "$ZOO_CONF_DIR" \
     && chown "$ZOO_USER:root" "$ZOO_DATA_LOG_DIR" "$ZOO_DATA_DIR" "$ZOO_CONF_DIR" \
     && chmod -R "g+rwX" "$ZOO_DATA_LOG_DIR" "$ZOO_DATA_DIR" "$ZOO_CONF_DIR"
 
-ARG DISTRO_NAME=zookeeper-3.4.11
+ARG DISTRO_NAME=apache-zookeeper-3.5.9
 
 # Download Apache Zookeeper, untar and clean up
-RUN curl -SLsO "http://www.apache.org/dist/zookeeper/$DISTRO_NAME/$DISTRO_NAME.tar.gz" \
-    && tar -xzf "$DISTRO_NAME.tar.gz" -C /opt \
+RUN curl -SLsO "https://downloads.apache.org/zookeeper/stable/$DISTRO_NAME.tar.gz" \
+    && gunzip "$DISTRO_NAME.tar.gz" \
+    && tar -xvf "$DISTRO_NAME.tar" -C /opt \
     && mv "/opt/$DISTRO_NAME/conf/"* "$ZOO_CONF_DIR" \
-    && rm -r "$DISTRO_NAME.tar.gz" \
+    && rm -r "$DISTRO_NAME.tar" \
     && mkdir -p /deployments/bin
 
 WORKDIR /opt/$DISTRO_NAME
